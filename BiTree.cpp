@@ -152,6 +152,36 @@ void levelOrderTraverse(BiTree T){
     }
 }
 
+//向一颗二叉排序树插入一个节点
+int insertBST(BiTree &T, char e){
+    if(T == NULL){
+        T = (BitNode *) malloc (sizeof(BitNode));
+        T->data = e;
+        T->lchild = T->rchild = NULL;
+        return 1;
+    }
+    else if(e == T->data)
+        return 0;
+    else if(e < T->data)
+        return insertBST(T->lchild, e);
+    else if(e > T->data)
+        return insertBST(T->rchild, e);
+}
+
+//建立排序二叉树
+BiTree createBST(){
+    BiTree T = NULL;
+    cout << "input values:(\'#\' to end)" << endl;
+    char c;
+    cin >> c;
+    while(c != '#'){
+        if(!insertBST(T, c))
+            cout << "value existed" << endl;
+        cin >> c;
+    }
+    return T;
+}
+
 
 int main(){
     BiTree T = createBiTreeMainByFile();
@@ -168,4 +198,7 @@ int main(){
     postOrderTraverse2(T);
     cout << endl;
     levelOrderTraverse(T);
+    cout << endl;
+    BiTree bst = createBST();
+    inOrderTraverse(bst);
 }
