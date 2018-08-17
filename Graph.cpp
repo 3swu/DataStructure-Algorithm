@@ -1,13 +1,14 @@
 #include <iostream>
 #include <queue>
-#include "Graph/MGraph.cpp"
+// #include "Graph/MGraph.cpp"
+#include "Graph/ALGraph.cpp"
 
-void BFSTraverse(MGraph &);
-void BFS(MGraph, bool*, int);
-void DFSTraverse(MGraph &);
-void DFS(MGraph, bool*, int);
+void BFSTraverse(ALGraph &);
+void BFS(ALGraph, bool*, int);
+void DFSTraverse(ALGraph &);
+void DFS(ALGraph, bool*, int);
 
-void BFSTraverse(MGraph &G){
+void BFSTraverse(ALGraph &G){
     bool visited[G.VexNum + 1];
     for(int i = 1; i <= G.VexNum; i++)
         visited[i] = false;
@@ -16,8 +17,8 @@ void BFSTraverse(MGraph &G){
             BFS(G, visited, i);
 }
 
-void BFS(MGraph G, bool* visited, int v){
-    cout << G.Vex[v] << endl;
+void BFS(ALGraph G, bool* visited, int v){
+    cout << G.vertices[v].data << endl;
     visited[v] = true;
     queue<int> q;
     q.push(v);
@@ -26,14 +27,14 @@ void BFS(MGraph G, bool* visited, int v){
         q.pop();
         for(int w = firstNeighbor(G, v); w >= 0; w = nextNeighbor(G, v, w))
             if(!visited[w]){
-                cout << G.Vex[w] << endl;
+                cout << G.vertices[w].data << endl;
                 visited[w] = true;
                 q.push(w);
             }
     }
 }
 
-void DFSTraverse(MGraph &G){
+void DFSTraverse(ALGraph &G){
     bool visited[G.VexNum + 1];
     for(int i = 1; i <= G.VexNum; i++)
         visited[i] = false;
@@ -43,8 +44,8 @@ void DFSTraverse(MGraph &G){
     }
 }
 
-void DFS(MGraph G, bool* visited, int v){
-    cout << G.Vex[v] << endl;
+void DFS(ALGraph G, bool* visited, int v){
+    cout << G.vertices[v].data << endl;
     visited[v] = true;
     queue<int> q;
     q.push(v);
@@ -58,15 +59,15 @@ void DFS(MGraph G, bool* visited, int v){
 }
 
 int main(){
-    MGraph g;
+    ALGraph g;
     cout << initGraphByFile(g) << endl;
     BFSTraverse(g);
     DFSTraverse(g);
-    // cout << adjacent(g, 4, 5) << endl;
-    // neighbors(g, 4);
-    // cout << insertVertex(g, 'f') << endl;
-    // cout << deleteVertex(g, 'c') << endl;
-    // cout << addEdge(g, 5, 6) << endl;
-    // cout << removeEdge(g, 4, 5) << endl;
-    // cout << firstNeighbor(g, 1) << endl;
+    cout << adjacent(g, 4, 5) << endl;
+    neighbors(g, 4);
+    cout << insertVertex(g, 'f') << endl;
+    cout << deleteVertex(g, 'c') << endl;
+    cout << addEdge(g, 5, 6) << endl;
+    cout << removeEdge(g, 4, 5) << endl;
+    cout << firstNeighbor(g, 1) << endl;
 }
