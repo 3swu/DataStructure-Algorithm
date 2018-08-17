@@ -99,8 +99,14 @@ bool deleteVertex(MGraph &G, char x){
     G.Vex[i] = '#';
     for(int j = 1; j < G.VexNum; j++){
         G.Edge[i][j] == 0;
-        G.Edge[j][i] == 0;
+        if(G.Edge[j][i] == 1){
+            G.Edge[j][i] == 0;
+            G.EdgeNum -= 2;
+        }
+        else
+            G.EdgeNum--;
     }
+    G.VexNum--;
     return true;
 }
 
