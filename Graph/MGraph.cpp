@@ -4,6 +4,7 @@
  * 
  */ 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -44,6 +45,20 @@ bool initGraph(MGraph &graph){
     graph.VexNum = verNum;
     graph.EdgeNum = edgeNum;
     return true;
+}
+
+//从文件读取图
+bool initGraphByFile(MGraph &graph){
+    cout << "reading MGraph.txt" << endl;
+    ifstream fin("/home/wulei/桌面/ds/Graph/MGraph.txt");
+    streambuf* cinbackup = cin.rdbuf(fin.rdbuf());
+    bool result = initGraph(graph);
+    cin.rdbuf(cinbackup);
+    if(result){
+        cout << "create success" << endl;
+        return true;
+    }
+    return false;
 }
 
 //判断图G是否存在边<x, y>或(x, y)

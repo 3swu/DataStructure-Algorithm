@@ -1,9 +1,40 @@
 #include <iostream>
+#include <queue>
 #include "Graph/MGraph.cpp"
+
+void BFSTraverse(MGraph &);
+void BFS(MGraph, bool*, int);
+
+void BFSTraverse(MGraph &G){
+    bool visited[G.VexNum + 1];
+    for(int i = 1; i <= G.VexNum; i++)
+        visited[i] = false;
+    for(int i = 1; i <= G.VexNum; i++)
+        if(!visited[i])
+            BFS(G, visited, i);
+}
+
+void BFS(MGraph G, bool* visited, int v){
+    cout << G.Vex[v] << endl;
+    visited[v] = true;
+    queue<int> q;
+    q.push(v);
+    while(!q.empty()){
+        v = q.front();
+        q.pop();
+        for(int w = firstNeighbor(G, v); w >= 0; w = nextNeighbor(G, v, w))
+            if(!visited[w]){
+                cout << G.Vex[w] << endl;
+                visited[w] = true;
+                q.push(w);
+            }
+    }
+}
 
 int main(){
     MGraph g;
-    cout << initGraph(g) << endl;
+    cout << initGraphByFile(g) << endl;
+    BFSTraverse(g);
     cout << adjacent(g, 4, 5) << endl;
     neighbors(g, 4);
     cout << insertVertex(g, 'f') << endl;
