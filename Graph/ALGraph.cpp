@@ -98,6 +98,7 @@ bool insertVertex(ALGraph &G, char x){
         return false;
     G.vertices[++G.VexNum].data = x;
     G.vertices[G.VexNum].first = NULL;
+    return true;
 }
 
 //从图G中删除点x
@@ -110,7 +111,7 @@ bool deleteVertex(ALGraph &G, char x){
     if(i == G.VexNum + 1)
         return false;
     ArcNode* p, * pr;
-    for(p = G.vertices[i].first, pr = p->next; p != NULL; p = pr, pr = pr->next, G.ArcNum--)
+    for(p = G.vertices[i].first, pr = p->next; pr != NULL; p = pr, pr = pr->next, G.ArcNum--)
         free(p);
     G.vertices[i].data = '#';
     G.vertices[i].first = NULL;
@@ -133,12 +134,17 @@ bool addEdge(ALGraph &G, int x, int y){
 
 //如果边(x, y)存在，则从图G中删除边(x, y)
 bool removeEdge(ALGraph &G, int x, int y){
-    ArcNode* p;
-    for(p = G.vertices[x].first; p != NULL; p = p->next){
-        if(p->next->adjvex == y){
-            ArcNode* dp = p->next;
-            p->next = dp->next;
-            free(dp);
+    ArcNode* p, * pl;
+    for(pl = G.vertices[x].first, p = pl->next; p != NULL; pl = p, p = p->next){
+        if(pl->adjvex == y){
+            G.vertices[x].first = pl->next;
+            free(pl);
+            G.ArcNum--;
+            return true;
+        }
+        if(p->adjvex == y){
+            pl->next = p->next;
+            free(p);
             G.ArcNum--;
             return true;
         }
