@@ -76,7 +76,7 @@ bool initGraphByFile(ALGraph &graph){
 bool adjacent(ALGraph &G, int x, int y){
     ArcNode* p;
     for(p = G.vertices[x].first; p != NULL; p = p->next)
-        if(p->adjvex = y)
+        if(p->adjvex == y)
             return true;
     return false;
 }
