@@ -15,6 +15,19 @@ void insert_sort(int a[], int n){
         }
 }
 
+//采用步长为 n / 2， 并且递推折半
+void shell_sort(int a[], int n){
+    int dk, i, j;
+    for(dk = n / 2; dk >= 1; dk /= 2)
+        for(i = dk + 1; i <= n; ++i)
+            if(a[i] < a[i - dk]){
+                a[0] = a[i];
+                for(j = i - dk; j > 0 && a[0] < a[j]; j -= dk)
+                    a[j + dk] = a[j];
+                a[j + dk] = a[0];
+            }
+}
+
 int main(){
     default_random_engine e(time(NULL));
     uniform_int_distribution<int> u(0, 100);
@@ -24,7 +37,8 @@ int main(){
     for(int i = 1; i <= 20; i++)
         cout << test[i] << " ";
     cout << endl;
-    insert_sort(test, 20);
+    // insert_sort(test, 20);
+    shell_sort(test, 20);
     for(int i = 1; i <= 20; i++)
         cout << test[i] << " ";
     cout << endl;
