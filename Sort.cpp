@@ -28,6 +28,28 @@ void shell_sort(int a[], int n){
             }
 }
 
+int partition(int a[], int low, int high){
+    a[0] = a[low];
+    while(low < high){
+        while(low < high && a[high] >= a[0])
+            --high;
+        a[low] = a[high];
+        while(low < high && a[low] <= a[0])
+            ++low;
+        a[high] = a[low];
+    }
+    a[low] = a[0];
+    return low;
+}
+
+void quick_sort(int a[], int low, int high){
+    if(low < high){
+        int pivotloc = partition(a, low, high);
+        quick_sort(a, low, pivotloc - 1);
+        quick_sort(a, pivotloc + 1, high);
+    }
+}
+
 int main(){
     default_random_engine e(time(NULL));
     uniform_int_distribution<int> u(0, 100);
@@ -38,7 +60,8 @@ int main(){
         cout << test[i] << " ";
     cout << endl;
     // insert_sort(test, 20);
-    shell_sort(test, 20);
+    // shell_sort(test, 20);
+    quick_sort(test, 1, 20);
     for(int i = 1; i <= 20; i++)
         cout << test[i] << " ";
     cout << endl;
