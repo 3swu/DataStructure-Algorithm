@@ -87,8 +87,8 @@ void build_max_heap(int a[], int n){
 void heap_sort(int a[], int n){
     build_max_heap(a, n);
     for(int i = n; i >= 1; i--){
-        int temp = a[0];
-        a[0] = a[i];
+        int temp = a[1];
+        a[1] = a[i];
         a[i] = temp;
         adjust_down(a, 1, i -1);
     }
