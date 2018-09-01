@@ -50,6 +50,20 @@ void quick_sort(int a[], int low, int high){
     }
 }
 
+void select_sort(int a[], int n){
+    for(int i = 1; i <= n-1; i++){
+        int min = i;
+        for(int j = i + 1; j <= n; j++)
+            if(a[j] < a[min])
+                min = j;
+        if(min != i){
+            int temp = a[min];
+            a[min] = a[i];
+            a[i] = temp;
+        }
+    }
+}
+
 int main(){
     default_random_engine e(time(NULL));
     uniform_int_distribution<int> u(0, 100);
@@ -61,7 +75,8 @@ int main(){
     cout << endl;
     // insert_sort(test, 20);
     // shell_sort(test, 20);
-    quick_sort(test, 1, 20);
+    // quick_sort(test, 1, 20);
+    select_sort(test, 20);
     for(int i = 1; i <= 20; i++)
         cout << test[i] << " ";
     cout << endl;
